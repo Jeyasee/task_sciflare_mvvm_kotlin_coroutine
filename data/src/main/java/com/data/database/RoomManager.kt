@@ -6,11 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.data.database.Migration.MIGRATION_v1_2
 import com.data.database.dao.flickr.SampleItemDao
+import com.data.database.dao.user.UserModelDao
 import com.domain.entity.flickr.SampleEntity
+import com.domain.entity.flickr.UserModelEntity
 import data.BuildConfig
 
 @Database(
-    entities = [SampleEntity::class],
+    entities = [SampleEntity::class, UserModelEntity::class],
     version = BuildConfig.DB_VERSION,
     exportSchema = false
 )
@@ -19,6 +21,7 @@ abstract class RoomManager : RoomDatabase() {
      * Connects the database to the DAO.
      */
     abstract val sampleItemDao: SampleItemDao
+    abstract val userModelDao: UserModelDao
 
     /*
     * [synchronized]
@@ -50,8 +53,10 @@ abstract class RoomManager : RoomDatabase() {
 
                 // If instance is `null` make a new database instance.
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.applicationContext,
-                        RoomManager::class.java, DATABASE_NAME)
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        RoomManager::class.java, DATABASE_NAME
+                    )
                         .addMigrations()
                         .fallbackToDestructiveMigration()
                         .addMigrations(MIGRATION_v1_2)

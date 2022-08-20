@@ -3,6 +3,7 @@ package com.data.di
 import android.content.Context
 import com.data.database.RoomManager
 import com.data.database.dao.flickr.SampleItemDao
+import com.data.database.dao.user.UserModelDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +18,11 @@ object DatabaseModule {
     @Provides
     fun provideSampleDao(appDatabase: RoomManager): SampleItemDao {
         return appDatabase.sampleItemDao
+    }
+
+    @Provides
+    fun provideUserModelDao(appDatabase: RoomManager): UserModelDao {
+        return appDatabase.userModelDao
     }
 
     @Provides
