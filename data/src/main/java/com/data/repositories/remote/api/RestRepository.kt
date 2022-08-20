@@ -13,6 +13,6 @@ class RestRepository @Inject constructor(private val restService: RestService) :
     }
 
     override suspend fun getUserModel(): Result<ResponseUserModel> {
-        return getUserModel()
+        return restService.getUserModel()
     }
 }

@@ -35,6 +35,10 @@
         </activity>
         <activity android:name="com.david.sciflare.main.ui.example_list.ExampleListActivity" />
         <activity android:name=".main.ui.map.MapActivity" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCDiUnxRrHowQzr2Gk0U63Km-soBwwBX5U" />
+
     </application>
 
 </manifest>

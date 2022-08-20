@@ -5,13 +5,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.david.support.base_class.room.BaseEntity
+import com.domain.entity.flickr.UserModelEntity.Companion.TABLE_NAME
 
 /*
 * [Please maintain table name, column format]
 * TableName = "tbl_title"
 * ColumnName = "title_etc"
 */
-@Entity(tableName = SampleEntity.TABLE_NAME)
+@Entity(tableName = TABLE_NAME)
 open class UserModelEntity : BaseEntity() {
 
     companion object {
