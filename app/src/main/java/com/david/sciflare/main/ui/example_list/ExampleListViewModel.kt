@@ -1,11 +1,11 @@
 package com.david.sciflare.main.ui.example_list
 
 import android.app.Application
+import com.david.support.base_class.BaseViewModel
 import com.domain.datasources.local.SettingsConfigurationSource
-import com.domain.datasources.remote.api.RestDataSource
+import com.domain.datasources.remote.api.RestService
 import com.domain.model.configuration.UserProfile
 import com.domain.model.example_list.ExampleApiModel
-import com.david.support.base_class.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class ExampleListViewModel @Inject constructor(application: Application) :
     BaseViewModel(application) {
 
     @Inject
-    lateinit var restDataSource: RestDataSource
+    lateinit var restDataSource: RestService
 
     @Inject
     lateinit var settingsConfigurationSource: SettingsConfigurationSource
@@ -28,7 +28,7 @@ class ExampleListViewModel @Inject constructor(application: Application) :
     fun retrieveExampleList(
         callback: (boolean: Boolean, ExampleApiModel?, error: String?) -> Unit, //todo: replace with specific type
     ) {
-        runOnNewThread {
+        /*runOnNewThread {
             showProgressDialog("Loading..")
             try {
                 val exampleList = restDataSource.getExampleList()
@@ -47,6 +47,6 @@ class ExampleListViewModel @Inject constructor(application: Application) :
                     callback(false, null, "retrieving failed ${e.localizedMessage}")
                 }
             }
-        }
+        }*/
     }
 }

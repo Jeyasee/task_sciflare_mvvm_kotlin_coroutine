@@ -4,12 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.asLiveData
+import com.david.sciflare.R
+import com.david.sciflare.databinding.ActivityExampleListBinding
 import com.domain.model.example_list.ExampleApiModelItem
 import com.david.sciflare.main.ui.example_list.adapter.ExampleAdapter
 import com.david.support.base_class.ActionBarActivity
 import com.david.support.utility.view.DialogBox.confirmationDialog
 import com.david.support.utility.view.DialogBox.listDialog
-import com.nativedevps.arch.databinding.ActivityExampleListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.toast
 

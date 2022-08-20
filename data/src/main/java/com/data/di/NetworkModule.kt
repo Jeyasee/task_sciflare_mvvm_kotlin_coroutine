@@ -1,12 +1,11 @@
 package com.data.di
 
-import com.google.gson.GsonBuilder
 import com.data.repositories.remote.api.RestRepository
 import com.data.repositories.remote.firebase.authentication.FirebaseAuthenticationRepository
 import com.data.utility.Constant
-import com.domain.datasources.remote.api.RestDataSource
 import com.domain.datasources.remote.api.RestService
 import com.domain.datasources.remote.firebase.FirebaseAuthenticationService
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,8 +30,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun firebaseRepository(restService: RestService): RestService {
-        return RestRepository(restService)
+    fun firebaseRepository(retrofit: Retrofit): RestService {
+        return RestRepository(retrofit.create(RestService::class.java))
     }
 
     @Provides
@@ -48,11 +47,5 @@ object NetworkModule {
             .client(httpClient.apply { addInterceptor(HttpLoggingInterceptor()) }.build())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRestService(retrofit: Retrofit): RestService {
-        return retrofit.create(RestService::class.java)
     }
 }

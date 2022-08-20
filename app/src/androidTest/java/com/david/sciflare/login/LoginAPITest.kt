@@ -1,7 +1,6 @@
 package com.david.sciflare.login
 
-import android.util.Log
-import com.domain.datasources.remote.api.RestDataSource
+import com.domain.datasources.remote.api.RestService
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import javax.inject.Inject
@@ -13,7 +12,7 @@ import javax.inject.Inject
  */
 class LoginAPITest {
     @Inject
-    lateinit var restDataSource: RestDataSource
+    lateinit var restDataSource: RestService
 
     @Test
     fun testCheckSessionExpiry() = runBlocking {
