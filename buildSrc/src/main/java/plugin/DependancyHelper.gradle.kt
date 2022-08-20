@@ -117,6 +117,7 @@ fun DependencyHandler.firebaseExternalLibraries(){
 
 fun DependencyHandler.thirdPartyLibraries(){
     implementation(ThirdPartyLibraries.otpview_pinview)
+    implementation("com.github.prabhat1707:EasyWayLocation:2.4")
 }
 
 fun DependencyHandler.mapsLibraries() {
