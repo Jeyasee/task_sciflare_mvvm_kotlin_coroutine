@@ -12,7 +12,7 @@ android {
         setMinSdkVersion(Configs.minSdkVersion)
         setTargetSdkVersion(Configs.targetSdkVersion.toString())
         buildConfigField("int", "DB_VERSION", "1")
-        buildConfigField("String", "REST_URL", "\"https://jsonkeeper.com/\"")
+        buildConfigField("String", "REST_URL", "\"https://crudcrud.com/\"")
         buildConfigField("String", "API_KEY", "\"space_to_key\"")
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
