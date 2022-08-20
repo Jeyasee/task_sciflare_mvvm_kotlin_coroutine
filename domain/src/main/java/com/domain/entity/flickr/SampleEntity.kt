@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.nativedevps.support.base_class.room.BaseEntity
+import com.david.support.base_class.room.BaseEntity
 
 /*
 * [Please maintain table name, column format]

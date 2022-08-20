@@ -2,7 +2,7 @@ object Configs {
     const val classpathCrashlytics = "2.7.1"
     const val classpathFirebasePerfs = "1.4.0"
     const val classpathGoogleServices = "4.3.10"
-    const val applicationId = "com.nativedevps.arch"
+    const val applicationId = "com.david.sciflare"
     const val kotlinVersion = "1.6.10"
     const val targetSdkVersion = 28
     const val minSdkVersion = 18

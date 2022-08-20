@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "469104699695",
+    "project_id": "blix-fd18e",
+    "storage_bucket": "blix-fd18e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469104699695:android:0f9fad9c7b7c806c81d9da",
+        "android_client_info": {
+          "package_name": "com.david.sciflare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "469104699695-4nuis7a6i66uaotraat4ofls3c871hmm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbJlc8FnkIsQrZfJe9AuQulgpVv6IQSK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "469104699695-4nuis7a6i66uaotraat4ofls3c871hmm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469104699695:android:47b88041e3260dbc81d9da",
+        "android_client_info": {
+          "package_name": "com.david.sciflare.development"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "469104699695-4nuis7a6i66uaotraat4ofls3c871hmm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbJlc8FnkIsQrZfJe9AuQulgpVv6IQSK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "469104699695-4nuis7a6i66uaotraat4ofls3c871hmm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

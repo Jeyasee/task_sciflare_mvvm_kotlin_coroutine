@@ -8,14 +8,6 @@ import com.domain.model.user_data.ResponseUserModel
 import javax.inject.Inject
 
 class RestRepository @Inject constructor(private val restService: RestService) :RestService {
-    override suspend fun update(): UpdateProfileModel? {
-        return restService.update()
-    }
-
-    override suspend fun getExampleList(): ExampleApiModel? {
-        return restService.getExampleList()
-    }
-
     override fun updateUser(body: RequestUserModel): Result<Unit> {
         return restService.updateUser(body)
     }

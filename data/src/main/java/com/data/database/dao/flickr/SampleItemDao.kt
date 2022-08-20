@@ -5,7 +5,7 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import com.domain.entity.flickr.SampleEntity
-import com.nativedevps.support.base_class.room.BaseDao
+import com.david.support.base_class.room.BaseDao
 
 @Dao
 abstract class SampleItemDao : BaseDao<SampleEntity>() {

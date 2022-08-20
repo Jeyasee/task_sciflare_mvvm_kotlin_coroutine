@@ -2,7 +2,7 @@ package com.data.repositories.local.configuration
 
 import android.content.Context
 import com.domain.datasources.local.IPreferencesDataSource
-import com.nativedevps.support.utility.shared_preference.SharedPreferences
+import com.david.support.utility.shared_preference.SharedPreferences
 import javax.inject.Inject
 
 
