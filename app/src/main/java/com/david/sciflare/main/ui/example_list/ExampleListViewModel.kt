@@ -10,6 +10,7 @@ import com.domain.datasources.local.SettingsConfigurationSource
 import com.domain.datasources.remote.api.RestService
 import com.domain.entity.flickr.UserModelEntity
 import com.domain.model.configuration.UserProfile
+import com.domain.model.user_data.RequestUserModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +43,7 @@ class ExampleListViewModel @Inject constructor(application: Application) :
     * retrieving and updating room db (sqlite)
     * */
     fun retrieveList() = liveData(Dispatchers.IO) {
+        showProgressDialog()
         runOnAsyncThread {
             /*Executing in IO Thread*/
             restDataSource.getUserModel().onSuccess {
@@ -50,11 +52,38 @@ class ExampleListViewModel @Inject constructor(application: Application) :
 
                 runOnMainThread {
                     /*Executing in Ui/Main thread*/
+                    hideProgressDialog()
                     emit("loaded")
                 }
             }.onFailure {
                 runOnMainThread {
+                    hideProgressDialog()
                     emit(it.localizedMessage)
+                }
+            }
+        }
+    }
+
+    fun addUser(
+        name: String,
+        email: String,
+        mobile: String,
+        gender: String
+    ) = liveData(Dispatchers.IO){
+        showProgressDialog()
+        runOnAsyncThread {
+            val requestUserModel = RequestUserModel(email,gender,mobile,name)
+            restDataSource.updateUser(requestUserModel).onSuccess {
+                userModelDao.insert(requestUserModel.asEntity()) /*insert single item into room db*/
+
+                runOnMainThread {
+                hideProgressDialog()
+                    emit(true to "added successfully")
+                }
+            }.onFailure {
+                runOnMainThread {
+                    hideProgressDialog()
+                    emit(false to it.localizedMessage)
                 }
             }
         }

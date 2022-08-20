@@ -11,8 +11,10 @@ import com.david.sciflare.main.ui.example_list.adapter.ExampleAdapter
 import com.david.support.base_class.ActionBarActivity
 import com.david.support.utility.view.DialogBox.confirmationDialog
 import com.david.support.utility.view.DialogBox.listDialog
+import com.domain.model.user_data.RequestUserModel
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.toast
+import java.util.*
 
 @AndroidEntryPoint
 class ExampleListActivity : ActionBarActivity<ActivityExampleListBinding, ExampleListViewModel>(
@@ -52,7 +54,22 @@ class ExampleListActivity : ActionBarActivity<ActivityExampleListBinding, Exampl
     }
 
     private fun initListener() {
+        childBinding.actionFloatingActionButton.setOnClickListener {
+            childBinding.extendFab = !childBinding.extendFab /*restore to another state*/
+        }
+        childBinding.addFloatingActionButton.setOnClickListener {
+            val name = randomString
+            val email = randomString+"@gmail.com"
+            val mobile = "0124567890"
+            val gender = if (Random().nextBoolean()) "Male" else "Female"
+
+            viewModel.addUser(name,email,mobile,gender).observe(this){(success,message)->
+                toast(message)
+            }
+        }
     }
+
+    private val randomString get() = UUID.randomUUID().toString().substring((0..10).random())
 
     private fun initPreview() {
         setTitle("Example List")
