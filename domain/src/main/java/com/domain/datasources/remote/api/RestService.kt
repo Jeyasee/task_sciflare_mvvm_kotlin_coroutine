@@ -1,6 +1,7 @@
 package com.domain.datasources.remote.api
 
 import com.domain.model.user_data.RequestUserModel
+import com.domain.model.user_data.ResponseAddModel
 import com.domain.model.user_data.ResponseUserModel
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -16,13 +17,14 @@ interface RestService {
     * */
     @Headers("Content-Type: application/json")
     @PUT("api/59a94681bbf748b08543d902636bd0a6/sample")
-    fun updateUser(@Body body: RequestUserModel): Result<Unit>
+    fun updateUser(@Body body: RequestUserModel): Result<ResponseAddModel>
 
     /*
     * using custom path @{token}
     * using custom name for path @{sample}
     * retrieving value from path
     * */
+    @Headers("Content-Type: application/json")
     @GET("api/59a94681bbf748b08543d902636bd0a6/sample")
     suspend fun getUserModel(): Result<ResponseUserModel>
 }

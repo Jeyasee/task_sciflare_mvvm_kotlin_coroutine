@@ -32,7 +32,6 @@ class ExampleListActivity : ActionBarActivity<ActivityExampleListBinding, Exampl
         super.onInit(savedInstanceState)
 
         initData()
-        initFetching()
         initListener()
         initPreview()
     }
@@ -48,7 +47,7 @@ class ExampleListActivity : ActionBarActivity<ActivityExampleListBinding, Exampl
                 it.submitList(userModelEntityList)
             }
         }
-        initFetching() /*invoking network call execution at beginning and retriving data*/
+        //initFetching() /*invoking network call execution at beginning and retriving data*/
     }
 
     private fun initFetching() {
