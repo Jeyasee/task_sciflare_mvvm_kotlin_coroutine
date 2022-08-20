@@ -12,7 +12,7 @@ import com.domain.entity.flickr.UserModelEntity
 abstract class UserModelDao : BaseDao<UserModelEntity>() {
 
     @get:Query("SELECT * FROM " + UserModelEntity.TABLE_NAME)
-    abstract val getLiveItemList: LiveData<List<UserModelEntity>>
+    abstract val userModelLiveData: LiveData<List<UserModelEntity>> /*retrieve database changes as callback*/
 
     @get:Query("SELECT COUNT(id) FROM " + UserModelEntity.TABLE_NAME)
     abstract val getCountOfItems: Long

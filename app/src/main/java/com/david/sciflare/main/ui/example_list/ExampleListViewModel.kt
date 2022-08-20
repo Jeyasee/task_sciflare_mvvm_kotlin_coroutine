@@ -5,11 +5,11 @@ import androidx.lifecycle.liveData
 import com.data.database.dao.user.UserModelDao
 import com.david.support.base_class.BaseViewModel
 import com.david.support.utility.threading.runOnAsyncThread
+import com.david.support.utility.threading.runOnMainThread
 import com.domain.datasources.local.SettingsConfigurationSource
 import com.domain.datasources.remote.api.RestService
 import com.domain.entity.flickr.UserModelEntity
 import com.domain.model.configuration.UserProfile
-import com.domain.model.example_list.ExampleApiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -30,44 +30,33 @@ class ExampleListViewModel @Inject constructor(application: Application) :
 
     val userProfile: Flow<UserProfile> get() = settingsConfigurationSource.getUserPreference()
 
+    val userModelLiveData get() = userModelDao.userModelLiveData /*listening updates by usermodel livedata*/
+
     override fun onCreate() {
     }
 
-    fun retrieveList() = liveData(Dispatchers.IO){
+    /*
+    * Execute and retrieve message as livedata value
+    *
+    * usecase:
+    * retrieving and updating room db (sqlite)
+    * */
+    fun retrieveList() = liveData(Dispatchers.IO) {
         runOnAsyncThread {
+            /*Executing in IO Thread*/
             restDataSource.getUserModel().onSuccess {
                 val entityList: List<UserModelEntity> = it.map { it.asEntity() }
-                userModelDao.insertAll(entityList)
-                emit("loaded")
+                userModelDao.insertAll(entityList) /*writing into room(sqlite) db*/
+
+                runOnMainThread {
+                    /*Executing in Ui/Main thread*/
+                    emit("loaded")
+                }
             }.onFailure {
-                emit(it.localizedMessage)
+                runOnMainThread {
+                    emit(it.localizedMessage)
+                }
             }
         }
-    }
-
-    fun retrieveExampleList(
-        callback: (boolean: Boolean, ExampleApiModel?, error: String?) -> Unit, //todo: replace with specific type
-    ) {
-
-        /*runOnNewThread {
-            showProgressDialog("Loading..")
-            try {
-                val exampleList = restDataSource.getExampleList()
-                runOnUiThread {
-                    if (!exampleList.isNullOrEmpty()) {
-                        hideProgressDialog()
-                        callback(true, exampleList, null) //todo
-                    } else {
-                        throw IllegalStateException("invalid result")
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                runOnUiThread {
-                    hideProgressDialog()
-                    callback(false, null, "retrieving failed ${e.localizedMessage}")
-                }
-            }
-        }*/
     }
 }

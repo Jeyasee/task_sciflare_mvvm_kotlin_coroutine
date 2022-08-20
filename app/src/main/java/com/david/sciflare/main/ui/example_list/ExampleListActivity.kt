@@ -36,20 +36,19 @@ class ExampleListActivity : ActionBarActivity<ActivityExampleListBinding, Exampl
         viewModel.userProfile.asLiveData().observe(this, { userProfile ->
             //todo: attach user data to ui
         })
-        viewModel.retrieveExampleList { success, model, error ->
-            if (success) {
-                if (!::exampleAdapter.isInitialized) {
-                    exampleAdapter = ExampleAdapter(this)
-                    childBinding.bankRecyclerView.adapter = exampleAdapter
-                }
-                exampleAdapter.submitList(model)
-            } else {
-                toast("failed $error")
-            }
+        viewModel.userModelLiveData.observe(this){
+            /*Database insert/update will be listened here*/
+
+            //todo: update adapter
         }
+        initFetching() /*invoking network call execution at beginning and retriving data*/
     }
 
     private fun initFetching() {
+        viewModel.retrieveList().observe(this){
+            //when network call success/failure @String will be passed here
+            toast(it)
+        }
     }
 
     private fun initListener() {
