@@ -41,10 +41,12 @@ class ExampleListActivity : ActionBarActivity<ActivityExampleListBinding, Exampl
         viewModel.userProfile.asLiveData().observe(this) { userProfile ->
             //todo: attach user data to ui
         }
-        viewModel.userModelLiveData.observe(this){
+        viewModel.userModelLiveData.observe(this){userModelEntityList ->
             /*Database insert/update will be listened here*/
 
-            //todo: update adapter
+            childBinding.bankRecyclerView.adapter = ExampleAdapter().also {
+                it.submitList(userModelEntityList)
+            }
         }
         initFetching() /*invoking network call execution at beginning and retriving data*/
     }
