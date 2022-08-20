@@ -18,22 +18,25 @@ import com.david.sciflare.databinding.ActivityMapBinding
 import com.david.sciflare.main.ui.example_list.adapter.ExampleAdapter
 import com.david.sciflare.main.utility.selfCheckPermission
 import com.david.support.base_class.ActionBarActivity
+import com.david.support.inline.orElse
 import com.david.support.utility.debugging.Log
 import com.example.easywaylocation.EasyWayLocation
 import com.example.easywaylocation.EasyWayLocation.LOCATION_SETTING_REQUEST_CODE
 import com.example.easywaylocation.Listener
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.toast
 
 @AndroidEntryPoint
-class MapActivity : ActionBarActivity<ActivityMapBinding, MapViewModel>(
+class MapActivity() : ActionBarActivity<ActivityMapBinding, MapViewModel>(
     R.layout.activity_map,
     MapViewModel::class.java
 ), ExampleAdapter.ItemListener {
 
+    private var googleMap: GoogleMap? = null
     private lateinit var easyWayLocation: EasyWayLocation
     private var alertDialog: AlertDialog? = null
     private lateinit var exampleAdapter: ExampleAdapter
@@ -42,6 +45,7 @@ class MapActivity : ActionBarActivity<ActivityMapBinding, MapViewModel>(
         super.onInit(savedInstanceState)
 
         initPermission()
+        initGps()
         initData()
         initMap()
         initListener()
@@ -80,15 +84,23 @@ class MapActivity : ActionBarActivity<ActivityMapBinding, MapViewModel>(
             }
 
             override fun currentLocation(location: Location?) {
-                /*
-                * copy retrieved location into Adapter variable
-                */
                 Log.e(
                     "MainScreen",
                     "currentLocation: lat.${location?.latitude} lng.${location?.longitude}"
                 )
                 location?.let {
-                    //todo: location latlng
+                    googleMap?.let { it1 -> markMyLocation(it1, LatLng(it.latitude, it.longitude)) }
+                        .orElse {
+                            "Map not initialized".apply {
+                                Log.e("initGps", this)
+                                toast(this)
+                            }
+                        }
+                }.orElse {
+                    "location not be null".apply {
+                        Log.e("initGps", this)
+                        toast(this)
+                    }
                 }
             }
 
@@ -108,14 +120,7 @@ class MapActivity : ActionBarActivity<ActivityMapBinding, MapViewModel>(
             supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment?
         mapFragment?.getMapAsync { googleMap ->
             /*Add marker into map*/
-            val latLng = LatLng(41.311081, 69.240562)
-            googleMap.addMarker(
-                MarkerOptions().position(latLng)
-                    .icon(bitmapDescriptorFromVector(this@MapActivity, R.drawable.ic_baseline_location_on_24))
-            ).showInfoWindow()
-            googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this@MapActivity, R.raw.map_style_json))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom((latLng), 11.0F))
-            googleMap.isMyLocationEnabled = false //showing current location
+            this@MapActivity.googleMap = googleMap
         }
     }
 
@@ -127,6 +132,33 @@ class MapActivity : ActionBarActivity<ActivityMapBinding, MapViewModel>(
         setNavigateUpEnabled(true)
     }
 
+    /*
+    * uses maps.goolgemap parameter1
+    * uses gmaps.latlng parameter2
+    *
+    * marks user current location by latlng
+    * */
+    @SuppressLint("MissingPermission")
+    private fun markMyLocation(googleMap: GoogleMap, latLng: LatLng) {
+        googleMap.addMarker(
+            MarkerOptions().position(latLng)
+                .icon(
+                    bitmapDescriptorFromVector(
+                        this@MapActivity,
+                        R.drawable.ic_baseline_location_on_24
+                    )
+                )
+        ).showInfoWindow()
+        googleMap.setMapStyle(
+            MapStyleOptions.loadRawResourceStyle(
+                this@MapActivity,
+                R.raw.map_style_json
+            )
+        )
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom((latLng), 11.0F))
+        googleMap.isMyLocationEnabled = true //showing current location
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         super.onBackPressed()
         return super.onSupportNavigateUp()
@@ -135,7 +167,8 @@ class MapActivity : ActionBarActivity<ActivityMapBinding, MapViewModel>(
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
         return ContextCompat.getDrawable(context, vectorResId)?.run {
             setBounds(0, 0, intrinsicWidth, intrinsicHeight)
-            val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+            val bitmap =
+                Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
             draw(Canvas(bitmap))
             BitmapDescriptorFactory.fromBitmap(bitmap)
         }
@@ -150,7 +183,7 @@ class MapActivity : ActionBarActivity<ActivityMapBinding, MapViewModel>(
             101 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (selfCheckPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        easyWayLocation?.startLocation()
+                        easyWayLocation.startLocation()
                     }
                 } else {
                     toast("Permission required")
