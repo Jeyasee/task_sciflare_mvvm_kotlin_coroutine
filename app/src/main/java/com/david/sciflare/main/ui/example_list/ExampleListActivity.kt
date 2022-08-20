@@ -33,9 +33,9 @@ class ExampleListActivity : ActionBarActivity<ActivityExampleListBinding, Exampl
     }
 
     private fun initData() {
-        viewModel.userProfile.asLiveData().observe(this, { userProfile ->
+        viewModel.userProfile.asLiveData().observe(this) { userProfile ->
             //todo: attach user data to ui
-        })
+        }
         viewModel.userModelLiveData.observe(this){
             /*Database insert/update will be listened here*/
 
