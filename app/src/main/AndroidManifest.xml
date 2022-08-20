@@ -21,13 +21,14 @@
         tools:targetApi="m">
         <activity
             android:exported="true"
-            android:name="com.david.sciflare.main.ui.example_list.ExampleListActivity">
+            android:name=".main.ui.navigation.NavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.david.sciflare.main.ui.example_list.ExampleListActivity" />
     </application>
 
 </manifest>

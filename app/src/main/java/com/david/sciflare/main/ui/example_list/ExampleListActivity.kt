@@ -1,6 +1,8 @@
 package com.david.sciflare.main.ui.example_list
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.asLiveData
@@ -11,6 +13,7 @@ import com.david.sciflare.main.ui.example_list.adapter.ExampleAdapter
 import com.david.support.base_class.ActionBarActivity
 import com.david.support.utility.view.DialogBox.confirmationDialog
 import com.david.support.utility.view.DialogBox.listDialog
+import com.domain.entity.flickr.UserModelEntity
 import com.domain.model.user_data.RequestUserModel
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.toast
@@ -81,22 +84,8 @@ class ExampleListActivity : ActionBarActivity<ActivityExampleListBinding, Exampl
         return super.onSupportNavigateUp()
     }
 
-    override fun onItemSelected(position: Int, item: ExampleApiModelItem) {
-        if (alertDialog != null && alertDialog?.isShowing!!) { //todo: ensure already alert dialog open
-            return
-        }
-        alertDialog =
-            listDialog(title = null, stringList = listOf(
-                Pair(R.drawable.ic_baseline_delete_24,
-                    "delete")
-            ), callback = { success, posText ->
-                alertDialog = null
-                if (success) {
-                    alertDialog = confirmationDialog(callback = { success ->
-                        //todo: optional usage
-                    })
-                }
-            })
+    override fun onItemSelected(position: Int, item: UserModelEntity) {
+        //todo: handle adapter listener
     }
 
     override fun onDestroy() {
@@ -106,5 +95,11 @@ class ExampleListActivity : ActionBarActivity<ActivityExampleListBinding, Exampl
 
     override fun getLocale(context: Context): String? {
         return "en"
+    }
+
+    companion object {
+        fun intent(activity:Activity): Intent {
+            return Intent(activity,ExampleListActivity::class.java)
+        }
     }
 }

@@ -3,28 +3,29 @@ package com.david.sciflare.main.ui.example_list.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.domain.model.example_list.ExampleApiModelItem
+
 import com.david.sciflare.databinding.ItemExampleListBinding
 import com.david.support.base_class.BaseAdapter2
 import com.david.support.base_class.BaseViewHolder
+import com.domain.entity.flickr.UserModelEntity
 
 class ExampleAdapter(private val itemListener: ItemListener? = null) :
-    BaseAdapter2<ExampleApiModelItem, Int>() {
-    override fun getList(): List<ExampleApiModelItem> {
+    BaseAdapter2<UserModelEntity, Int>() {
+    override fun getList(): List<UserModelEntity> {
         return currentList
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): BaseViewHolder<ExampleApiModelItem, Int> {
+    ): BaseViewHolder<UserModelEntity, Int> {
         return ExampleViewHolder(
             ItemExampleListBinding.inflate(LayoutInflater.from(parent.context)),
             getSelections()
         )
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<ExampleApiModelItem, Int>, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<UserModelEntity, Int>, position: Int) {
         holder.bind(position, currentList[position])
         holder.itemView.setOnClickListener {
             itemListener?.onItemSelected(position, currentList[position])
@@ -32,24 +33,24 @@ class ExampleAdapter(private val itemListener: ItemListener? = null) :
     }
 
     interface ItemListener {
-        fun onItemSelection(position: Int, item: ExampleApiModelItem) {}
-        fun onItemSelected(position: Int, item: ExampleApiModelItem) {}
+        fun onItemSelection(position: Int, item: UserModelEntity) {}
+        fun onItemSelected(position: Int, item: UserModelEntity) {}
         fun onOptionSelected(
             view: View? = null,
             position: Int,
-            item: ExampleApiModelItem,
+            item: UserModelEntity,
         ) {
         }
     }
 
-    override fun isSameItem(oldItem: ExampleApiModelItem, newItem: ExampleApiModelItem): Boolean {
-        return oldItem.name == newItem.name
+    override fun isSameItem(oldItem: UserModelEntity, newItem: UserModelEntity): Boolean {
+        return oldItem.id == newItem.id
     }
 
     override fun isSameContent(
-        oldItem: ExampleApiModelItem,
-        newItem: ExampleApiModelItem,
+        oldItem: UserModelEntity,
+        newItem: UserModelEntity,
     ): Boolean {
-        return oldItem.image == newItem.image
+        return oldItem.name == newItem.name
     }
 }
