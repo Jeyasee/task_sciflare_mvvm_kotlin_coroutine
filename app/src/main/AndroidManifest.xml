@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.david.sciflare.main.ui.example_list.ExampleListActivity" />
+        <activity android:name=".main.ui.map.MapActivity" />
     </application>
 
 </manifest>

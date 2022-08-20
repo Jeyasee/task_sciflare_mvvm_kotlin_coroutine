@@ -7,6 +7,7 @@ import com.david.sciflare.R
 import com.david.sciflare.databinding.ActivityNavigationBinding
 import com.david.sciflare.main.ui.example_list.ExampleListActivity
 import com.david.sciflare.main.ui.example_list.adapter.ExampleAdapter
+import com.david.sciflare.main.ui.map.MapActivity
 import com.david.support.base_class.ActionBarActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,7 +37,7 @@ class NavigationActivity : ActionBarActivity<ActivityNavigationBinding, Navigati
             startActivity(ExampleListActivity.intent(this@NavigationActivity))
         }
         childBinding.mapAppCompatButton.setOnClickListener {
-            //todo: invoke map activity
+            startActivity(MapActivity.intent(this@NavigationActivity))
         }
     }
 
