@@ -118,3 +118,7 @@ fun DependencyHandler.firebaseExternalLibraries(){
 fun DependencyHandler.thirdPartyLibraries(){
     implementation(ThirdPartyLibraries.otpview_pinview)
 }
+
+fun DependencyHandler.mapsLibraries() {
+    implementation(MapLibraries.maps)
+}

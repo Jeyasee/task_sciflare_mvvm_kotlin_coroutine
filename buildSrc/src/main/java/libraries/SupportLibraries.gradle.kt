@@ -168,3 +168,8 @@ object GoogleMiscLibraries {
     const val google_oauth_jetty= "com.google.oauth-client:google-oauth-client-jetty:1.33.1" ////https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client-jetty/1.33.1
     const val google_api_client= "com.google.api-client:google-api-client-android:1.33.2" //exclude: org.apache.httpcomponents https://mvnrepository.com/artifact/com.google.api-client/google-api-client-android/1.33.2
 }
+
+object MapLibraries {
+    const val maps = "com.google.android.gms:play-services-maps:17.0.0"
+    const val location = "com.google.android.gms:play-services-location:17.0.0"
+}

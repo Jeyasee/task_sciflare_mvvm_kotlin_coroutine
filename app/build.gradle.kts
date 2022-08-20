@@ -90,6 +90,7 @@ dependencies {
     dataStoreLibraries()
     firebaseLibraries()
     thirdPartyLibraries()
+    mapsLibraries()
     testLibraries()
     testImplementation(kotlin("test"))
 }
